@@ -6,9 +6,6 @@ async function BNRS_scraper(keyword: string, sort_order: string = 'asc', sort_by
     const url = "https://bnrs.dti.gov.ph/search";
     const params = { keyword, sort_order, sort_by, criteria }
     const res = await axios.get(url, { params });
-    // const url = "https://bnrs.dti.gov.ph/search?keyword=Jukcatts+Boarding+House&criteria=exact&sort_by=business_name&sort_order=asc"
-    // const res = await axios.get<string>(url);
-
     const $ = cheerio.load(res.data);
     const tbody_tr = $('tbody');
     const tr = tbody_tr.find('tr');
@@ -24,9 +21,6 @@ async function BNRS_scraper(keyword: string, sort_order: string = 'asc', sort_by
         });
         dataArray.push(obj);
     });
-    // const data = tr.children().map((i, el: any) => {
-    //     console.log(`${dataColumns[i]}:`, el.children[0].data.trim());
-    // });
     return { length: tr.length, data: dataArray };
 }
 async function verifyBusiness(keyword: string) {
